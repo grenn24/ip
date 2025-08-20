@@ -17,4 +17,8 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    public String toString() {
+        return String.format("[%s] %s",  completed ? "X" : " ", description);
+    }
 }
