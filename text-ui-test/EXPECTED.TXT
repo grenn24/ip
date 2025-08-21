@@ -5,17 +5,29 @@ Got it. I've added this task:
  [T][ ] todo1
 Now you have 1 tasks in the list.
 Got it. I've added this task:
- [E][ ] event1 (from: 2019-01-01 to:  2019-01-02)
+ [E][ ] event1 (from: 2019-01-01 to: 2019-01-02)
 Now you have 2 tasks in the list.
 Got it. I've added this task:
- [D][ ] deadline1 (by:  2019-01-01)
+ [D][ ] deadline1 (by: 2019-01-01)
 Now you have 3 tasks in the list.
 Here are the pending tasks:
 1.[T][ ] todo1
-2.[E][ ] event1 (from: 2019-01-01 to:  2019-01-02)
-3.[D][ ] deadline1 (by:  2019-01-01)
+2.[E][ ] event1 (from: 2019-01-01 to: 2019-01-02)
+3.[D][ ] deadline1 (by: 2019-01-01)
 Nice! I've marked this task as done:
- 2.[E][X] event1 (from: 2019-01-01 to:  2019-01-02)
+ 2.[E][X] event1 (from: 2019-01-01 to: 2019-01-02)
 OK, I've marked this task as not done yet:
- 2.[E][ ] event1 (from: 2019-01-01 to:  2019-01-02)
+ 2.[E][ ] event1 (from: 2019-01-01 to: 2019-01-02)
+OOPS!!! Missing task description
+Please provide the description of the task.
+OOPS!!! Missing task description
+Please provide the description of the task.
+OOPS!!! Missing task description
+Please provide the description of the task.
+OOPS!!! Missing event start and end times
+Events must have /from and /to times.
+OOPS!!! Missing deadline
+Deadlines must have /by time.
+OOPS!!! Unknown command
+The supported commands are: list, mark, unmark, todo, event, deadline, bye
 Goodbye!

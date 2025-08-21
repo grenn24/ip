@@ -4,4 +4,10 @@ deadline deadline1 /by 2019-01-01
 list
 mark 2
 unmark 2
+todo
+event
+deadline
+event event1
+deadline deadline1
+task
 bye
