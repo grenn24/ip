@@ -4,6 +4,7 @@ deadline deadline1 /by 2019-01-01
 list
 mark 2
 unmark 2
+delete 2
 todo
 event
 deadline
