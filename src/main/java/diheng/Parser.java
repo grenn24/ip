@@ -1,6 +1,7 @@
 package diheng;
 
 import diheng.enums.Command;
+import diheng.exceptions.DiHengException;
 import diheng.tasks.TaskList;
 
 public class Parser {
