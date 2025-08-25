@@ -1,9 +1,16 @@
+
 public class Task {
+
     private final String description;
-    private boolean completed;
+    private boolean isCompleted;
 
     public Task(String description) {
         this.description = description;
+    }
+
+    public Task(String description, boolean isCompleted) {
+        this.description = description;
+        this.isCompleted = isCompleted;
     }
 
     public String getDescription() {
@@ -11,15 +18,15 @@ public class Task {
     }
 
     public boolean isCompleted() {
-        return completed;
+        return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     @Override
     public String toString() {
-        return String.format("[%s] %s",  completed ? "X" : " ", description);
+        return String.format("[%s] %s", isCompleted ? "X" : " ", description);
     }
 }

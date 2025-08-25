@@ -1,1 +1,1 @@
-1.[E][ ] event1 (from: yest to: tmr)
+1.[D][ ] deadline1 (by: 24/12/2003 18:00)

@@ -160,11 +160,12 @@ public class DiHeng {
             }
 
             String taskPart = line.substring(dotIndex + 1).trim();
+            boolean isCompleted = line.substring(dotIndex + 3, dotIndex + 6).equals("[X]");
 
             if (taskPart.startsWith("[T]")) {
                 // ToDo
                 String desc = taskPart.substring(6).trim();
-                return new ToDo(desc);
+                return new ToDo(desc, isCompleted);
             } else if (taskPart.startsWith("[E]")) {
                 int fromIndex = taskPart.indexOf("(from:");
                 int toIndex = taskPart.indexOf("to:", fromIndex);
@@ -176,7 +177,7 @@ public class DiHeng {
                 String desc = taskPart.substring(6, fromIndex).trim();
                 String start = taskPart.substring(fromIndex + 6, toIndex).trim();
                 String end = taskPart.substring(toIndex + 3, endIndex).trim();
-                return new Event(desc, start, end);
+                return new Event(desc, start, end, isCompleted);
             } else if (taskPart.startsWith("[D]")) {
                 int byIndex = taskPart.indexOf("(by:");
                 int endIndex = taskPart.indexOf(")", byIndex);
@@ -186,7 +187,7 @@ public class DiHeng {
                 }
                 String desc = taskPart.substring(6, byIndex).trim();
                 String by = taskPart.substring(byIndex + 4, endIndex).trim();
-                return new Deadline(desc, by);
+                return new Deadline(desc, by, isCompleted);
             } else {
                 System.out.println("Warning: Unknown task type -> " + line);
                 return null;
