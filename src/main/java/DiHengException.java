@@ -1,3 +1,4 @@
+
 public class DiHengException extends Exception {
 
     private final String recoverySuggestion;
