@@ -14,6 +14,7 @@ public class UI {
 
     /**
      * Reads the next line of input from the user.
+     *
      * @return the raw user input
      */
     public String readInput() {
@@ -34,10 +35,23 @@ public class UI {
 
     /**
      * Displays an error message to the user.
+     *
      * @param e the Exception containing the error message
      */
     public void showError(Exception e) {
         System.out.println(e.getMessage());
+    }
+
+
+    /**
+     * Displays a message to the user.
+     *
+     * @param message the message to display
+     * @return whether the program should terminate
+     */
+    public boolean showMessage(String message) {
+        System.out.println(message);
+        return message.equals("Goodbye!");
     }
 
     public void close() {
