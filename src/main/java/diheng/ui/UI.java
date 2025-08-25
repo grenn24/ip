@@ -1,4 +1,4 @@
-package diheng;
+package diheng.ui;
 
 import java.util.Scanner;
 

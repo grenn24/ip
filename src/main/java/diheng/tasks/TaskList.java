@@ -3,8 +3,8 @@ package diheng.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
-import diheng.DiHengException;
 import diheng.enums.Command;
+import diheng.exceptions.DiHengException;
 
 public class TaskList {
 

@@ -1,6 +1,8 @@
 package diheng;
 
+import diheng.exceptions.DiHengException;
 import diheng.tasks.TaskList;
+import diheng.ui.UI;
 
 public class DiHeng {
 
