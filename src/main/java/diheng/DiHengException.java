@@ -1,3 +1,4 @@
+package diheng;
 
 public class DiHengException extends Exception {
 

@@ -1,3 +1,4 @@
+package diheng.enums;
 public enum Command {
     LIST,
     TODO,
