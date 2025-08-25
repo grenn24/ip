@@ -18,6 +18,7 @@ public class Task {
         this.completed = completed;
     }
 
+    @Override
     public String toString() {
         return String.format("[%s] %s",  completed ? "X" : " ", description);
     }
