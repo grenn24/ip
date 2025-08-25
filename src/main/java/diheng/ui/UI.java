@@ -2,6 +2,9 @@ package diheng.ui;
 
 import java.util.Scanner;
 
+/**
+ * Handles user interactions, including reading commands and displaying messages.
+ */
 public class UI {
 
     private final Scanner scanner;
@@ -10,14 +13,17 @@ public class UI {
         this.scanner = new Scanner(System.in);
     }
 
-    public String readCommand() {
+    /**
+     * Reads the next line of input from the user.
+     * @return the raw user input
+     */
+    public String readInput() {
         return scanner.nextLine();
     }
 
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
-
+    /**
+     * Displays a greeting message to the user.
+     */
     public void showGreeting() {
         String greeting = """
                 Hello from Di Heng!!!
@@ -27,8 +33,12 @@ public class UI {
         System.out.print(greeting);
     }
 
-    public void showError(String errorMessage) {
-        System.out.println("Error: " + errorMessage);
+    /**
+     * Displays an error message to the user.
+     * @param e the Exception containing the error message
+     */
+    public void showError(Exception e) {
+        System.out.println(e.getMessage());
     }
 
     public void close() {

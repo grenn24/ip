@@ -23,6 +23,10 @@ public class Storage {
         this.filepath = filepath;
     }
 
+    /**
+     * Save a list of task to the file specified by filepath.
+     * @throws DiHengException if an io exception occurs
+     */
     public void saveTasks(List<Task> tasks) throws DiHengException {
         File file = new File(filepath);
         File parent = file.getParentFile();
@@ -42,6 +46,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Load tasks from the file specified by filepath.
+     * @return a list of tasks loaded from the file
+     * @throws DiHengException if an io exception occurs
+     */
     public List<Task> loadTasks() throws DiHengException {
         File file = new File(filepath);
         if (!file.exists()) {
@@ -68,6 +77,10 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Convert the string representation of a task stored in file to a Task object.
+     * @return a task
+     */
     private Task parseTaskFromString(String line) {
         try {
             int dotIndex = line.indexOf(".");
@@ -77,10 +90,8 @@ public class Storage {
             }
 
             String taskPart = line.substring(dotIndex + 1).trim();
-            boolean isCompleted = line.substring(dotIndex + 3, dotIndex + 6).equals("[X]");
-
+            boolean isCompleted = line.substring(dotIndex + 4, dotIndex + 7).equals("[X]");
             if (taskPart.startsWith("[T]")) {
-                // ToDo
                 String desc = taskPart.substring(6).trim();
                 return new ToDo(desc, isCompleted);
             } else if (taskPart.startsWith("[E]")) {

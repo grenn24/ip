@@ -8,10 +8,13 @@ public class DiHeng {
 
     private final static String FILENAME = "./data/di-heng.txt";
     private TaskList tasklist;
-    private Storage storage;
+    private final Storage storage;
     private final Parser parser;
     private final UI ui;
 
+    /**
+     * Initializes the DiHeng chatBot, loading tasks from storage and setting up the parser and UI.
+     */
     public DiHeng() {
         this.storage = new Storage(FILENAME);
         try {
@@ -23,25 +26,26 @@ public class DiHeng {
         this.ui = new UI();
     }
 
+    /**
+     * Run the chatBot, reading user input and executing commands in a loop until the user exits.
+     */
     public void run() {
         ui.showGreeting();
         while (true) {
             try {
-                String input = ui.readCommand();
+                String input = ui.readInput();
                 boolean isExit = parser.parse(input);
                 if (isExit) {
                     return;
                 }
-            } catch (DiHengException e) {
-                ui.showError(e.getMessage());
-            } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                ui.showError("Invalid task index provided. Please check your command and try again.");
+            } catch (DiHengException | NumberFormatException | IndexOutOfBoundsException e) {
+                ui.showError(e);
             }
         }
     }
 
     public static void main(String[] args) {
-        DiHeng chatbot = new DiHeng();
-        chatbot.run();
+        DiHeng chatBot = new DiHeng();
+        chatBot.run();
     }
 }
