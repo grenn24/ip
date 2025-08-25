@@ -1,7 +1,6 @@
 package diheng.tasks;
 
 public class ToDo extends Task {
-
     /**
      * Constructor for ToDo task.
      * @param description Description of the todo task.
