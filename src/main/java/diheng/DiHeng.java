@@ -34,7 +34,8 @@ public class DiHeng {
         while (true) {
             try {
                 String input = ui.readInput();
-                boolean isExit = parser.parse(input);
+                String message = parser.parse(input);
+                boolean isExit = ui.showMessage(message);
                 if (isExit) {
                     return;
                 }

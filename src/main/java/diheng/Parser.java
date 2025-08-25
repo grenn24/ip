@@ -5,7 +5,6 @@ import diheng.exceptions.DiHengException;
 import diheng.tasks.TaskList;
 
 public class Parser {
-
     private final TaskList tasklist;
 
     public Parser(TaskList tasklist) {
@@ -14,10 +13,12 @@ public class Parser {
 
     /**
      * Parses and executes a command based on raw user input.
+     *
      * @param input the raw user input
+     * @return the message to be displayed to the user by UI class
      * @throws DiHengException if the user input is invalid
      */
-    public boolean parse(String input) throws DiHengException {
+    public String parse(String input) throws DiHengException {
         String[] parts = input.split(" ", 2);
         Command command;
         if (parts.length == 0) {
@@ -26,96 +27,74 @@ public class Parser {
         try {
             command = Command.valueOf(parts[0].toUpperCase());
         } catch (IllegalArgumentException e) {
-           command = Command.UNKNOWN;
+            command = Command.UNKNOWN;
         }
         String commandArgs = parts.length > 1 ? parts[1] : "";
 
         switch (command) {
             case BYE:
-                return handleBye();
+                return "Goodbye!";
             case LIST:
-                tasklist.listTasks();
-                break;
+                return tasklist.list();
             case MARK:
-                handleMark(commandArgs);
-                break;
+                return handleMark(commandArgs);
             case UNMARK:
-                handleUnmark(commandArgs);
-                break;
+                return handleUnmark(commandArgs);
             case DELETE:
-                handleDelete(commandArgs);
-                break;
+                return handleDelete(commandArgs);
             case CLEAR:
-                tasklist.clearTasks();
-                break;
+                return tasklist.clear();
+            case FIND:
+                return tasklist.find(commandArgs);
             case TODO, EVENT, DEADLINE:
-                handleCreateTask(command, commandArgs);
-                break;
+                return tasklist.add(command, commandArgs);
             default:
                 throw new DiHengException(
                         "Unknown command: " + parts[0],
                         "The supported commands are: list, mark, unmark, todo, event, deadline, bye"
                 );
         }
-        return false;
+
     }
 
-    /**
-     * Handles the BYE command.
-     * @return true to terminate the program
-     */
-    private boolean handleBye() {
-        System.out.println("Goodbye!");
-        return true;
-    }
 
     /**
      * Handles the MARK command.
+     *
      * @param args the arguments for the command
      * @throws DiHengException if the arguments are invalid
      */
-    private void handleMark(String args) throws DiHengException {
+    private String handleMark(String args) throws DiHengException {
         int index = parseTaskIndex(args);
-        tasklist.markTask(index - 1);
+        return tasklist.markTask(index - 1);
     }
 
     /**
      * Handles the UNMARK command.
+     *
      * @param args the arguments for the command
      * @throws DiHengException if the arguments are invalid
      */
-    private void handleUnmark(String args) throws DiHengException {
+    private String handleUnmark(String args) throws DiHengException {
         int index = parseTaskIndex(args);
-        tasklist.unmarkTask(index - 1);
+        return tasklist.unmarkTask(index - 1);
     }
 
     /**
      * Handles the DELETE command.
+     *
      * @param args the arguments for the command
      * @throws DiHengException if the arguments are invalid
      */
-    private void handleDelete(String args) throws DiHengException {
+    private String handleDelete(String args) throws DiHengException {
         int index = parseTaskIndex(args);
-        tasklist.deleteTask(index - 1);
+        return tasklist.delete(index - 1);
     }
 
-    /**
-     * Handles the command for creating a new task.
-     * @param args the arguments for the command
-     * @throws DiHengException if the arguments are invalid
-     */
-    private void handleCreateTask(Command command, String args) throws DiHengException {
-        if (args.isEmpty()) {
-            throw new DiHengException(
-                    "Missing task description",
-                    "Please provide the description of the task."
-            );
-        }
-        tasklist.createTask(command, args);
-    }
 
     /**
      * Parse the task index from the command arguments.
+     *
      * @param args the arguments for the command
      * @throws DiHengException if the arguments are invalid
      */

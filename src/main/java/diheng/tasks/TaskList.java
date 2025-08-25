@@ -22,80 +22,121 @@ public class TaskList {
         this.tasks = tasks;
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
-    }
-
     /**
      * Lists all tasks in the task list according to their string representation.
      */
-    public void listTasks() {
-        System.out.println("Here are the pending tasks:");
-        for (int i = 0; i < this.tasks.size(); i++) {
-            Task task = this.tasks.get(i);
-            System.out.printf("%d.%s\n", i + 1, task);
+    public String list() {
+        if (tasks.isEmpty()) {
+            return "No tasks available.";
         }
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the pending tasks:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            sb.append(String.format("%d.%s\n", i + 1, task));
+        }
+        return sb.toString().trim();
     }
 
     /**
      * Marks a task as completed based on its index in the task list.
+     *
      * @param index the index of the task to be marked as completed (0-based)
      */
-    public void markTask(int index) {
+    public String markTask(int index) {
         Task task = this.tasks.get(index);
         task.setCompleted(true);
 
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.printf(" %d.%s\n", index + 1, task);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nice! I've marked this task as done:\n");
+        sb.append(String.format(" %d.%s", index + 1, task));
+        return sb.toString().trim();
     }
 
     /**
      * Unmarks a task as not completed based on its index in the task list.
+     *
      * @param index the index of the task to be unmarked as not completed (0-based)
      */
-    public void unmarkTask(int index) {
+    public String unmarkTask(int index) {
         Task task = this.tasks.get(index);
         task.setCompleted(false);
-
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.printf(" %d.%s\n", index + 1, task);
+        StringBuilder sb = new StringBuilder();
+        sb.append("OK, I've marked this task as not done yet:\n");
+        sb.append(String.format(" %d.%s", index + 1, task));
+        return sb.toString().trim();
     }
 
     /**
      * Deletes a task from the task list based on its index.
+     *
      * @param index the index of the task to be deleted (0-based)
      */
-    public void deleteTask(int index) {
+    public String delete(int index) {
         Task task = this.tasks.get(index);
         this.tasks.remove(index);
 
-        System.out.println("Noted. I've removed this task:");
-        System.out.printf(" %d.%s\n", index + 1, task);
-        System.out.printf("Now you have %d tasks in the list.\n", this.tasks.size());
+        StringBuilder sb = new StringBuilder();
+        sb.append("Noted. I've removed this task:\n");
+        sb.append(String.format(" %d.%s\n", index + 1, task));
+        sb.append(String.format("Now you have %d tasks in the list", this.tasks.size()));
+        return sb.toString().trim();
+    }
+
+
+    /**
+     * Finds tasks in the task list whose descriptions contain the input string
+     * (case-insensitive) and returns a string representation of the matching tasks.
+     *
+     * @param input the string to search for in the task descriptions
+     * @return a string representation of the matching tasks, or "No tasks found." if no
+     * matching tasks are found
+     */
+    public String find(String input) {
+        if (input == null || input.isEmpty()) {
+            return "No tasks found.";
+        }
+        List<Task> tasks = this.tasks.stream()
+                .filter(task -> task.getDescription()
+                        .toLowerCase()
+                        .contains(input.toLowerCase()))
+                .toList();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the matching tasks in your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            sb.append(String.format("%d.%s\n", i + 1, task));
+        }
+        return sb.toString().trim();
     }
 
     /**
      * Clears all tasks from the task list.
      */
-    public void clearTasks() {
+    public String clear() {
         tasks.clear();
-        System.out.println("All tasks have been cleared.");
+        return "All tasks have been cleared.\n";
     }
 
     /**
      * Creates a new task based on the command type and arguments, adds it to the task list,
      * and prints confirmation messages.
-     * @param type the type of task to create (TODO, EVENT, DEADLINE)
+     *
+     * @param type        the type of task to create (TODO, EVENT, DEADLINE)
      * @param commandArgs the arguments for creating the task
      * @return the created Task object
      * @throws DiHengException if there are issues with the command arguments
      */
-    public Task createTask(Command type, String commandArgs) throws DiHengException {
+    public String add(Command type, String commandArgs) throws DiHengException {
+        if (commandArgs.isEmpty()) {
+            throw new DiHengException(
+                    "Missing task description",
+                    "Please provide the description of the task."
+            );
+        }
         Task currTask;
         switch (type) {
-            case TODO ->
-                currTask = new ToDo(commandArgs);
+            case TODO -> currTask = new ToDo(commandArgs);
 
             case EVENT -> {
                 String[] parts = commandArgs.split("/from|/to");
@@ -120,16 +161,17 @@ public class TaskList {
                 currTask = new Deadline(desc, by);
             }
 
-            default ->
-                throw new DiHengException(
-                        "Unknown command",
-                        "The supported commands are: list, mark, unmark, todo, event, deadline, bye"
-                );
+            default -> throw new DiHengException(
+                    "Unknown command",
+                    "The supported commands are: list, mark, unmark, todo, event, deadline, bye"
+            );
         }
         tasks.add(currTask);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(" " + currTask);
-        System.out.printf("Now you have %d tasks in the list.\n", tasks.size());
-        return currTask;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Got it. I've added this task:\n");
+        sb.append(String.format(" %s\n", currTask));
+        sb.append(String.format(" Now you have %d tasks in the list.", tasks.size()));
+        return sb.toString().trim();
     }
 }

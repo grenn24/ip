@@ -23,14 +23,14 @@ class ParserTest {
 
     @Test
     void testByeCommand() throws DiHengException {
-        boolean result = parser.parse("bye");
-        assertTrue(result, "BYE command should return true to terminate the program");
+        String message = parser.parse("bye");
+        assertEquals("Goodbye!", message, "BYE command should return 'Goodbye!'");
     }
 
     @Test
     void testListCommand() throws DiHengException {
         parser.parse("list");
-        verify(mockTaskList, times(1)).listTasks();
+        verify(mockTaskList, times(1)).list();
     }
 
     @Test
@@ -48,32 +48,32 @@ class ParserTest {
     @Test
     void testDeleteCommand() throws DiHengException {
         parser.parse("delete 3");
-        verify(mockTaskList, times(1)).deleteTask(2);
+        verify(mockTaskList, times(1)).delete(2);
     }
 
     @Test
     void testClearCommand() throws DiHengException {
         parser.parse("clear");
-        verify(mockTaskList, times(1)).clearTasks();
+        verify(mockTaskList, times(1)).clear();
     }
 
     @Test
     void testTodoCommand() throws DiHengException {
         parser.parse("todo Buy milk");
-        verify(mockTaskList, times(1)).createTask(Command.TODO, "Buy milk");
+        verify(mockTaskList, times(1)).add(Command.TODO, "Buy milk");
     }
 
     @Test
     void testEventCommand() throws DiHengException {
         parser.parse("event Buy milk /from 2pm /to 4pm");
-        verify(mockTaskList, times(1)).createTask(Command.EVENT, "Buy milk /from 2pm /to 4pm");
+        verify(mockTaskList, times(1)).add(Command.EVENT, "Buy milk /from 2pm /to 4pm");
     }
 
     @Test
     void testDeadlineCommand() throws DiHengException {
         parser.parse("event Buy milk /by 24/12/2003 16:00");
         verify(mockTaskList, times(1))
-                .createTask(Command.EVENT, "Buy milk /by 24/12/2003 16:00");
+                .add(Command.EVENT, "Buy milk /by 24/12/2003 16:00");
     }
 
     @Test

@@ -10,5 +10,6 @@ public enum Command {
     DELETE,
     BYE,
     CLEAR,
+    FIND,
     UNKNOWN();
 }
