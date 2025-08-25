@@ -5,7 +5,6 @@ import diheng.tasks.TaskList;
 import diheng.ui.UI;
 
 public class DiHeng {
-
     private final static String FILENAME = "./data/di-heng.txt";
     private TaskList tasklist;
     private final Storage storage;

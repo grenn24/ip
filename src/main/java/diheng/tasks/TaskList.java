@@ -11,7 +11,6 @@ import diheng.exceptions.DiHengException;
  * delete, clear, and create tasks.
  */
 public class TaskList {
-
     private final List<Task> tasks;
 
     public TaskList() {

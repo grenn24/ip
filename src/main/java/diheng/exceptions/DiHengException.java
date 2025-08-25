@@ -1,7 +1,6 @@
 package diheng.exceptions;
 
 public class DiHengException extends Exception {
-
     private final String recoverySuggestion;
 
     public DiHengException(String message, String recoverySuggestion) {

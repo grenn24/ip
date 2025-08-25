@@ -16,7 +16,6 @@ import diheng.tasks.Task;
 import diheng.tasks.ToDo;
 
 public class Storage {
-
     private final String filepath;
 
     public Storage(String filepath) {
