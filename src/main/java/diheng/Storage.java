@@ -15,10 +15,17 @@ import diheng.tasks.Event;
 import diheng.tasks.Task;
 import diheng.tasks.ToDo;
 
+/**
+ * A class that handles the import and export of tasks.
+ */
 public class Storage {
 
     private final String filepath;
 
+    /**
+     * Constructor for Storage with a filepath.
+     * @param filepath
+     */
     public Storage(String filepath) {
         this.filepath = filepath;
     }

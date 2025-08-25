@@ -18,6 +18,10 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Constructor for TaskList with a list of tasks.
+     * @param tasks
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }

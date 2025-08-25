@@ -4,10 +4,17 @@ import diheng.enums.Command;
 import diheng.exceptions.DiHengException;
 import diheng.tasks.TaskList;
 
+/**
+ * A class that parses and executes commands inside a raw user input.
+ */
 public class Parser {
 
     private final TaskList tasklist;
 
+    /**
+     * Constructor for Parser with a task list.
+     * @param tasklist
+     */
     public Parser(TaskList tasklist) {
         this.tasklist = tasklist;
     }

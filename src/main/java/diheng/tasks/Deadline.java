@@ -3,6 +3,9 @@ package diheng.tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A class representing a deadline task.
+ */
 public class Deadline extends Task {
 
     private final LocalDateTime deadline;

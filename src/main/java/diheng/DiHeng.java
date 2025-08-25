@@ -4,6 +4,9 @@ import diheng.exceptions.DiHengException;
 import diheng.tasks.TaskList;
 import diheng.ui.UI;
 
+/**
+ * The main class of the DiHeng chatBot.
+ */
 public class DiHeng {
 
     private final static String FILENAME = "./data/di-heng.txt";

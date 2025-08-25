@@ -1,5 +1,8 @@
 package diheng.tasks;
 
+/**
+ * A class representing a todo task.
+ */
 public class ToDo extends Task {
 
     /**
