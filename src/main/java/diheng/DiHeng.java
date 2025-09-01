@@ -8,10 +8,25 @@ import diheng.ui.UI;
  * The main class of the DiHeng chatBot.
  */
 public class DiHeng {
+    /**
+     * The file name of the storage file.
+     */
     private final static String FILENAME = "./data/di-heng.txt";
+    /**
+     * The task list to be used by the chatBot.
+     */
     private TaskList tasklist;
+    /**
+     * The storage to be used by the chatBot.
+     */
     private final Storage storage;
+    /**
+     * The parser to be used by the chatBot.
+     */
     private final Parser parser;
+    /**
+     * The UI to be used by the chatBot.
+     */
     private final UI ui;
 
     /**

@@ -19,10 +19,14 @@ import diheng.tasks.ToDo;
  * A class that handles the import and export of tasks.
  */
 public class Storage {
+    /**
+     * The filepath of the storage file.
+     */
     private final String filepath;
 
     /**
      * Constructor for Storage with a filepath.
+     *
      * @param filepath
      */
     public Storage(String filepath) {
@@ -31,6 +35,8 @@ public class Storage {
 
     /**
      * Save a list of task to the file specified by filepath.
+     *
+     * @param tasks the list of tasks to be saved
      * @throws DiHengException if an io exception occurs
      */
     public void saveTasks(List<Task> tasks) throws DiHengException {
@@ -54,6 +60,7 @@ public class Storage {
 
     /**
      * Load tasks from the file specified by filepath.
+     *
      * @return a list of tasks loaded from the file
      * @throws DiHengException if an io exception occurs
      */
@@ -85,6 +92,8 @@ public class Storage {
 
     /**
      * Convert the string representation of a task stored in file to a Task object.
+     *
+     * @param line the string representation of a task stored in file
      * @return a task
      */
     private Task parseTaskFromString(String line) {
