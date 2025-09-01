@@ -13,6 +13,9 @@ import diheng.exceptions.DiHengException;
  * @see Task
  */
 public class TaskList {
+    /**
+     * The list of tasks.
+     */
     private final List<Task> tasks;
 
     public TaskList() {
@@ -22,7 +25,7 @@ public class TaskList {
     /**
      * Constructor for TaskList with a list of tasks.
      *
-     * @param tasks
+     * @param tasks the list of tasks
      */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
@@ -30,6 +33,8 @@ public class TaskList {
 
     /**
      * Lists all tasks in the task list according to their string representation.
+     *
+     * @return a string representation of the tasks
      */
     public String list() {
         if (tasks.isEmpty()) {
@@ -48,6 +53,7 @@ public class TaskList {
      * Marks a task as completed based on its index in the task list.
      *
      * @param index the index of the task to be marked as completed (0-based)
+     * @return a string to be printed by UI
      */
     public String markTask(int index) {
         Task task = this.tasks.get(index);
@@ -63,6 +69,7 @@ public class TaskList {
      * Unmarks a task as not completed based on its index in the task list.
      *
      * @param index the index of the task to be unmarked as not completed (0-based)
+     * @return a string to be printed by UI
      */
     public String unmarkTask(int index) {
         Task task = this.tasks.get(index);
@@ -77,6 +84,7 @@ public class TaskList {
      * Deletes a task from the task list based on its index.
      *
      * @param index the index of the task to be deleted (0-based)
+     * @return a string to be printed by UI
      */
     public String delete(int index) {
         Task task = this.tasks.get(index);
@@ -118,6 +126,8 @@ public class TaskList {
 
     /**
      * Clears all tasks from the task list.
+     *
+     * @return a string message indicating that all tasks have been cleared
      */
     public String clear() {
         tasks.clear();

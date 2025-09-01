@@ -1,6 +1,13 @@
 package diheng.tasks;
+
 public class Task {
+    /**
+     * The description of the task.
+     */
     private final String description;
+    /**
+     * The completion status of the task.
+     */
     private boolean isCompleted;
 
     public Task(String description) {

@@ -8,6 +8,9 @@ import diheng.tasks.TaskList;
  * A class that parses and executes commands inside a raw user input.
  */
 public class Parser {
+    /**
+     * The task list to be used by the parser.
+     */
     private final TaskList tasklist;
 
     /**
@@ -30,7 +33,8 @@ public class Parser {
         String[] parts = input.split(" ", 2);
         Command command;
         if (parts.length == 0) {
-            throw new DiHengException("No command provided", "Please provide a command followed by an argument");
+            throw new DiHengException("No command provided",
+                    "Please provide a command followed by an argument");
         }
         try {
             command = Command.valueOf(parts[0].toUpperCase());
@@ -70,6 +74,7 @@ public class Parser {
      * Handles the MARK command.
      *
      * @param args the arguments for the command
+     * @return the message to be displayed to the user by UI class
      * @throws DiHengException if the arguments are invalid
      */
     private String handleMark(String args) throws DiHengException {
@@ -81,6 +86,7 @@ public class Parser {
      * Handles the UNMARK command.
      *
      * @param args the arguments for the command
+     * @return the message to be displayed to the user by UI class
      * @throws DiHengException if the arguments are invalid
      */
     private String handleUnmark(String args) throws DiHengException {
@@ -92,6 +98,7 @@ public class Parser {
      * Handles the DELETE command.
      *
      * @param args the arguments for the command
+     * @return the message to be displayed to the user by UI class
      * @throws DiHengException if the arguments are invalid
      */
     private String handleDelete(String args) throws DiHengException {
@@ -104,6 +111,7 @@ public class Parser {
      * Parse the task index from the command arguments.
      *
      * @param args the arguments for the command
+     * @return the message to be displayed to the user by UI class
      * @throws DiHengException if the arguments are invalid
      */
     private int parseTaskIndex(String args) throws DiHengException {
