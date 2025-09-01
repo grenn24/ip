@@ -78,20 +78,28 @@ public class Parser {
      * @throws DiHengException if the arguments are invalid
      */
     private String handleMark(String args) throws DiHengException {
-        int index = parseTaskIndex(args);
-        return tasklist.markTask(index - 1);
+        String[] parts = args.split("\\s+");
+        int[] indexes = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            indexes[i] = parseTaskIndex(parts[i]);
+        }
+        return tasklist.markTasks(indexes);
     }
 
     /**
-     * Handles the UNMARK command.
+     * Handles the UNMARK command for one or more tasks.
      *
-     * @param args the arguments for the command
-     * @return the message to be displayed to the user by UI class
-     * @throws DiHengException if the arguments are invalid
+     * @param args the arguments for the command (space-separated task indexes)
+     * @return a message summarizing which tasks were unmarked
+     * @throws DiHengException if any argument is invalid
      */
     private String handleUnmark(String args) throws DiHengException {
-        int index = parseTaskIndex(args);
-        return tasklist.unmarkTask(index - 1);
+        String[] parts = args.split("\\s+");
+        int[] indexes = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            indexes[i] = parseTaskIndex(parts[i]);
+        }
+        return tasklist.unmarkTasks(indexes);
     }
 
     /**
