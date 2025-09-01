@@ -73,7 +73,11 @@ public class DiHeng {
      * @param input The user's chat message.
      * @return The chatBot's response.
      */
-    public String getResponse(String input) {
-        return "Di Heng heard: " + input;
+    public String getInputResponse(String input) {
+        try {
+            return parser.parse(input);
+        } catch (DiHengException | NumberFormatException | IndexOutOfBoundsException e) {
+            return e.getMessage();
+        }
     }
 }

@@ -31,8 +31,10 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Injects the Duke instance
+     *
+     * @param d the chatbot instance
      */
-    public void setDuke(DiHeng d) {
+    public void setChatbot(DiHeng d) {
         chatbot = d;
     }
 
@@ -43,7 +45,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = chatbot.getResponse(input);
+        String response = chatbot.getInputResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage)
