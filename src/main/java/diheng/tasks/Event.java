@@ -2,6 +2,8 @@ package diheng.tasks;
 
 /**
  * A class representing an event task.
+ *
+ * @see Task
  */
 public class Event extends Task {
     private final String start;

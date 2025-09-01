@@ -12,7 +12,8 @@ public class Parser {
 
     /**
      * Constructor for Parser with a task list.
-     * @param tasklist
+     *
+     * @param tasklist the task list to be used by the parser
      */
     public Parser(TaskList tasklist) {
         this.tasklist = tasklist;

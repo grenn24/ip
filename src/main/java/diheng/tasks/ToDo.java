@@ -2,10 +2,13 @@ package diheng.tasks;
 
 /**
  * A class representing a todo task.
+ *
+ * @see Task
  */
 public class ToDo extends Task {
     /**
      * Constructor for ToDo task.
+     *
      * @param description Description of the todo task.
      */
     public ToDo(String description) {
@@ -14,6 +17,7 @@ public class ToDo extends Task {
 
     /**
      * Constructor for ToDo task with completion status.
+     *
      * @param description Description of the todo task.
      * @param isCompleted Completion status of the todo task.
      */

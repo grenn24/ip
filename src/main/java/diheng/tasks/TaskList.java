@@ -9,6 +9,8 @@ import diheng.exceptions.DiHengException;
 /**
  * Manages a list of tasks, providing functionalities to add, list, mark, unmark,
  * delete, clear, and create tasks.
+ *
+ * @see Task
  */
 public class TaskList {
     private final List<Task> tasks;
@@ -19,6 +21,7 @@ public class TaskList {
 
     /**
      * Constructor for TaskList with a list of tasks.
+     *
      * @param tasks
      */
     public TaskList(List<Task> tasks) {
