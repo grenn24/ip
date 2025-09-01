@@ -49,34 +49,41 @@ public class TaskList {
         return sb.toString().trim();
     }
 
-    /**
-     * Marks a task as completed based on its index in the task list.
-     *
-     * @param index the index of the task to be marked as completed (0-based)
-     * @return a string to be printed by UI
-     */
-    public String markTask(int index) {
-        Task task = this.tasks.get(index);
-        task.setCompleted(true);
 
+    /**
+     * Marks one or more tasks as completed.
+     *
+     * @param indexes the indexes of the tasks to be marked as completed (0-based)
+     * @return a string summarizing which tasks have been marked
+     * @throws IndexOutOfBoundsException if any index is invalid
+     */
+    public String markTasks(int... indexes) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nice! I've marked this task as done:\n");
-        sb.append(String.format(" %d.%s", index + 1, task));
+        for (int index : indexes) {
+            Task task = this.tasks.get(index); // may throw IndexOutOfBoundsException
+            task.setCompleted(true);
+            sb.append("Nice! I've marked this task as done:\n");
+            sb.append(String.format(" %d.%s\n", index + 1, task));
+        }
         return sb.toString().trim();
     }
 
+
     /**
-     * Unmarks a task as not completed based on its index in the task list.
+     * Marks one or more tasks as not completed.
      *
-     * @param index the index of the task to be unmarked as not completed (0-based)
-     * @return a string to be printed by UI
+     * @param indexes the indexes of the tasks to unmark (0-based)
+     * @return a message summarizing which tasks have been unmarked
+     * @throws IndexOutOfBoundsException if any index is invalid
      */
-    public String unmarkTask(int index) {
-        Task task = this.tasks.get(index);
-        task.setCompleted(false);
+    public String unmarkTasks(int... indexes) {
         StringBuilder sb = new StringBuilder();
-        sb.append("OK, I've marked this task as not done yet:\n");
-        sb.append(String.format(" %d.%s", index + 1, task));
+        for (int index : indexes) {
+            Task task = this.tasks.get(index);  // may throw IndexOutOfBoundsException
+            task.setCompleted(false);
+            sb.append("OK, I've marked this task as not done yet:\n");
+            sb.append(String.format(" %d.%s\n", index + 1, task));
+        }
         return sb.toString().trim();
     }
 

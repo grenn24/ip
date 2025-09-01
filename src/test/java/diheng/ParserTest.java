@@ -35,14 +35,14 @@ class ParserTest {
 
     @Test
     void testMarkCommand() throws DiHengException {
-        parser.parse("mark 1");
-        verify(mockTaskList, times(1)).markTask(0);
+        parser.parse("mark 1 3");
+        verify(mockTaskList, times(1)).markTasks(1);
     }
 
     @Test
     void testUnmarkCommand() throws DiHengException {
-        parser.parse("unmark 2");
-        verify(mockTaskList, times(1)).unmarkTask(1);
+        parser.parse("unmark 2 3");
+        verify(mockTaskList, times(1)).unmarkTasks(1);
     }
 
     @Test
