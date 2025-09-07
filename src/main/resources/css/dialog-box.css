@@ -1,25 +1,37 @@
+/* Dialog label for messages */
 .label {
-    -fx-background-color: linear-gradient(to bottom right, #00ffbf, #00ddff);
-    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
-    -fx-border-width: 2px;
-    -fx-background-radius: 1em 1em 0 1em;
-    -fx-border-radius: 1em 1em 0 1em;
+    -fx-background-color: #1c1c1c; /* dark gray for general bubbles */
+    -fx-border-color: #ffffff; /* white border for contrast */
+    -fx-border-width: 1.5px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-padding: 8 12 8 12;
+    -fx-text-fill: #ffffff; /* white text */
+    -fx-font-size: 16px;
+    -fx-wrap-text: true;
 }
 
-.reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+/* User message bubble */
+.label.user {
+    -fx-background-color: #ffffff; /* white bubble */
+    -fx-text-fill: #000000; /* black text */
+    -fx-background-radius: 15px 15px 0 15px;
+    -fx-border-radius: 15px 15px 0 15px;
 }
 
+/* Bot message bubble */
+.label.bot {
+    -fx-background-color: #1c1c1c; /* dark gray bubble */
+    -fx-text-fill: #ffffff; /* white text */
+    -fx-background-radius: 15px 15px 15px 0;
+    -fx-border-radius: 15px 15px 15px 0;
+}
+
+/* Display picture / avatar */
 #displayPicture {
-    /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
-
-    /* Change size of image. */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 10, 0.5, 5, 5);
     -fx-scale-x: 1;
     -fx-scale-y: 1;
-
-    /* Rotate image clockwise by degrees. */
     -fx-rotate: 0;
+    -fx-background-radius: 50%; /* round avatar */
 }
-

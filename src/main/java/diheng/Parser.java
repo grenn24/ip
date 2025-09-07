@@ -130,7 +130,7 @@ public class Parser {
             );
         }
         try {
-            return Integer.parseInt(args);
+            return Integer.parseInt(args) - 1;
         } catch (NumberFormatException e) {
             throw new DiHengException(
                     "Invalid task index",
