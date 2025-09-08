@@ -43,7 +43,10 @@ public class Storage {
         File file = new File(filepath);
         File parent = file.getParentFile();
         if (parent != null && !parent.exists()) {
-            parent.mkdirs();
+            boolean isSuccessful = parent.mkdirs();
+            if (!isSuccessful) {
+                throw new DiHengException("Error saving tasks", "Try again later");
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {

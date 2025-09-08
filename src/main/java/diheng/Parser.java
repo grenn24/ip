@@ -30,18 +30,17 @@ public class Parser {
      * @throws DiHengException if the user input is invalid
      */
     public String parse(String input) throws DiHengException {
+        assert input != null && !input.isEmpty() : "Input should not be null or empty";
         String[] parts = input.split(" ", 2);
+        assert parts.length > 0 : "Split parts should not be empty";
         Command command;
-        if (parts.length == 0) {
-            throw new DiHengException("No command provided",
-                    "Please provide a command followed by an argument");
-        }
         try {
             command = Command.valueOf(parts[0].toUpperCase());
         } catch (IllegalArgumentException e) {
             command = Command.UNKNOWN;
         }
         String commandArgs = parts.length > 1 ? parts[1] : "";
+        assert commandArgs != null : "Command args should not be null";
 
         switch (command) {
             case BYE:
@@ -123,6 +122,7 @@ public class Parser {
      * @throws DiHengException if the arguments are invalid
      */
     private int parseTaskIndex(String args) throws DiHengException {
+        assert args != null : "Task index args should not be null";
         if (args.isEmpty()) {
             throw new DiHengException(
                     "Missing task index",
