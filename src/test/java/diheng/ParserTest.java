@@ -13,12 +13,14 @@ import diheng.tasks.TaskList;
 class ParserTest {
 
     private TaskList mockTaskList;
+    private Storage mockStorage;
     private Parser parser;
 
     @BeforeEach
     void setUp() {
         mockTaskList = mock(TaskList.class);
-        parser = new Parser(mockTaskList);
+        mockStorage = mock(Storage.class);
+        parser = new Parser(mockTaskList, mockStorage);
     }
 
     @Test

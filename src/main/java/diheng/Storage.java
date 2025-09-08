@@ -44,11 +44,19 @@ public class Storage {
     /**
      * Default filepath for storage.
      */
-    private final String filepath;
+    private String filepath;
 
     public Storage(String filepath) {
         assert filepath != null && !filepath.isEmpty() : "Filepath must not be null or empty";
         this.filepath = filepath;
+        Path path = Paths.get(filepath);
+        try {
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create directories for file: " + filepath);
+        }
     }
 
     public void saveTasks(List<Task> tasks) throws DiHengException {
@@ -165,5 +173,20 @@ public class Storage {
         String desc = taskPart.substring(6, byIndex).trim();
         String by = taskPart.substring(byIndex + 4, endIndex).trim();
         return Optional.of(new Deadline(desc, by, isCompleted));
+    }
+
+    public String setFilepath(String filepath) throws DiHengException {
+        assert filepath != null && !filepath.isEmpty() : "Filepath must not be null or empty";
+        Path path = Paths.get(filepath);
+        try {
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
+            }
+        } catch (IOException e) {
+            throw new DiHengException("Could not create a new directory for the path: " + filepath,
+                    "Maybe try a new different directory instead?");
+        }
+        this.filepath = filepath;
+        return "File path changed successfully!";
     }
 }

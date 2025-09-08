@@ -15,7 +15,7 @@ public class DiHeng {
     /**
      * The task list to be used by the chatBot.
      */
-    private TaskList tasklist;
+    private TaskList tasklist = new TaskList();
     /**
      * The storage to be used by the chatBot.
      */
@@ -39,7 +39,7 @@ public class DiHeng {
         } catch (DiHengException e) {
             System.out.println(e.getMessage());
         }
-        this.parser = new Parser(this.tasklist);
+        this.parser = new Parser(this.tasklist, this.storage);
         this.ui = new UI();
     }
 
