@@ -2,12 +2,16 @@ package diheng;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 import diheng.exceptions.DiHengException;
 import diheng.tasks.Deadline;
@@ -19,42 +23,52 @@ import diheng.tasks.ToDo;
  * A class that handles the import and export of tasks.
  */
 public class Storage {
+
     /**
-     * The filepath of the storage file.
+     * Logger for Storage class.
+     */
+    private static final Logger logger = Logger.getLogger(Storage.class.getName());
+    /**
+     * Marker for ToDo tasks.
+     */
+    private static final String TODO_MARKER = "[T]";
+    /**
+     * Marker for Event tasks.
+     */
+    private static final String EVENT_MARKER = "[E]";
+    /**
+     * Marker for Deadline tasks.
+     */
+    private static final String DEADLINE_MARKER = "[D]";
+
+    /**
+     * Default filepath for storage.
      */
     private final String filepath;
 
-    /**
-     * Constructor for Storage with a filepath.
-     *
-     * @param filepath
-     */
     public Storage(String filepath) {
+        assert filepath != null && !filepath.isEmpty() : "Filepath must not be null or empty";
         this.filepath = filepath;
     }
 
-    /**
-     * Save a list of task to the file specified by filepath.
-     *
-     * @param tasks the list of tasks to be saved
-     * @throws DiHengException if an io exception occurs
-     */
     public void saveTasks(List<Task> tasks) throws DiHengException {
-        assert tasks != null : "Tasks list should not be null";
-        File file = new File(filepath);
-        File parent = file.getParentFile();
-        if (parent != null && !parent.exists()) {
-            boolean isSuccessful = parent.mkdirs();
-            if (!isSuccessful) {
-                throw new DiHengException("Error saving tasks", "Try again later");
+        assert tasks != null : "Tasks list must not be null";
+
+        Path path = Paths.get(filepath);
+        try {
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
             }
+        } catch (IOException e) {
+            throw new DiHengException("Error saving tasks",
+                    "Could not create directories for file: " + filepath);
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (int i = 0; i < tasks.size(); i++) {
-                Task task = tasks.get(i);
-                assert task != null : "Task at index " + i + " should not be null";
-                writer.write((i + 1) + "." + task.toString());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
+            int counter = 1;
+            for (Task task : tasks) {
+                assert task != null : "Task in list cannot be null";
+                writer.write(counter++ + "." + task.toString());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -63,30 +77,25 @@ public class Storage {
         }
     }
 
-    /**
-     * Load tasks from the file specified by filepath.
-     *
-     * @return a list of tasks loaded from the file
-     * @throws DiHengException if an io exception occurs
-     */
+    @SuppressWarnings("checkstyle:NeedBraces")
     public List<Task> loadTasks() throws DiHengException {
-        File file = new File(filepath);
-        if (!file.exists()) {
+        Path path = Paths.get(filepath);
+        if (!Files.exists(path)) {
             return new ArrayList<>();
         }
 
         List<Task> loadedTasks = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty()) {
                     continue;
                 }
-                Task task = parseTaskFromString(line);
-                assert task != null : "Parsed task should not be null";
-                loadedTasks.add(task);
+
+                Optional<? extends Task> taskOpt = parseTaskFromString(line);
+                taskOpt.ifPresent(loadedTasks::add);
             }
         } catch (IOException e) {
             throw new DiHengException("Error loading tasks",
@@ -96,56 +105,66 @@ public class Storage {
         return loadedTasks;
     }
 
-    /**
-     * Convert the string representation of a task stored in file to a Task object.
-     *
-     * @param line the string representation of a task stored in file
-     * @return a task
-     */
-    private Task parseTaskFromString(String line) {
+    private Optional<? extends Task> parseTaskFromString(String line) {
         try {
             int dotIndex = line.indexOf(".");
             if (dotIndex == -1) {
-                System.out.println("Warning: Invalid task format -> " + line);
-                return null;
+                logger.warning("Invalid task format -> " + line);
+                return Optional.empty();
             }
 
             String taskPart = line.substring(dotIndex + 1).trim();
             boolean isCompleted = line.substring(dotIndex + 4, dotIndex + 7).equals("[X]");
-            if (taskPart.startsWith("[T]")) {
-                String desc = taskPart.substring(6).trim();
-                assert !desc.isEmpty() : "ToDo description should not be empty";
-                return new ToDo(desc, isCompleted);
-            } else if (taskPart.startsWith("[E]")) {
-                int fromIndex = taskPart.indexOf("(from:");
-                int toIndex = taskPart.indexOf("to:", fromIndex);
-                int endIndex = taskPart.indexOf(")", toIndex);
-                if (fromIndex == -1 || toIndex == -1 || endIndex == -1) {
-                    System.out.println("Warning: Invalid Event format -> " + line);
-                    return null;
-                }
-                String desc = taskPart.substring(6, fromIndex).trim();
-                String start = taskPart.substring(fromIndex + 6, toIndex).trim();
-                String end = taskPart.substring(toIndex + 3, endIndex).trim();
-                return new Event(desc, start, end, isCompleted);
-            } else if (taskPart.startsWith("[D]")) {
-                int byIndex = taskPart.indexOf("(by:");
-                int endIndex = taskPart.indexOf(")", byIndex);
-                if (byIndex == -1 || endIndex == -1) {
-                    System.out.println("Warning: Invalid Deadline format -> " + line);
-                    return null;
-                }
-                String desc = taskPart.substring(6, byIndex).trim();
-                String by = taskPart.substring(byIndex + 4, endIndex).trim();
-                return new Deadline(desc, by, isCompleted);
+
+            if (taskPart.startsWith(TODO_MARKER)) {
+                return parseToDo(taskPart, isCompleted);
+            } else if (taskPart.startsWith(EVENT_MARKER)) {
+                return parseEvent(taskPart, isCompleted);
+            } else if (taskPart.startsWith(DEADLINE_MARKER)) {
+                return parseDeadline(taskPart, isCompleted);
             } else {
-                System.out.println("Warning: Unknown task type -> " + line);
-                return null;
+                logger.warning("Unknown task type -> " + line);
+                return Optional.empty();
             }
         } catch (Exception e) {
-            // catch any unexpected parsing error
-            System.out.println("Warning: Could not parse line -> " + line);
-            return null;
+            logger.warning("Could not parse line -> " + line + " Exception: " + e.getMessage());
+            return Optional.empty();
         }
+    }
+
+    private Optional<ToDo> parseToDo(String taskPart, boolean isCompleted) {
+        String desc = taskPart.substring(6).trim();
+        assert !desc.isEmpty() : "ToDo description should not be empty";
+        return Optional.of(new ToDo(desc, isCompleted));
+    }
+
+    private Optional<Event> parseEvent(String taskPart, boolean isCompleted) {
+        int fromIndex = taskPart.indexOf("(from:");
+        int toIndex = taskPart.indexOf("to:", fromIndex);
+        int endIndex = taskPart.indexOf(")", toIndex);
+
+        if (fromIndex == -1 || toIndex == -1 || endIndex == -1) {
+            logger.warning("Invalid Event format -> " + taskPart);
+            return Optional.empty();
+        }
+
+        String desc = taskPart.substring(6, fromIndex).trim();
+        String start = taskPart.substring(fromIndex + 6, toIndex).trim();
+        String end = taskPart.substring(toIndex + 3, endIndex).trim();
+        return Optional.of(new Event(desc, start, end, isCompleted));
+    }
+
+    private Optional<Deadline> parseDeadline(String taskPart, boolean isCompleted) {
+        int byIndex = taskPart.indexOf("(by:");
+        int endIndex = taskPart.indexOf(")", byIndex);
+
+        if (byIndex == -1 || endIndex == -1) {
+            logger.warning("Invalid Deadline format -> " + taskPart);
+            return Optional.empty();
+        }
+
+        String desc = taskPart.substring(6, byIndex).trim();
+        String by = taskPart.substring(byIndex + 4, endIndex).trim();
+        return Optional.of(new Deadline(desc, by, isCompleted));
     }
 }
