@@ -40,15 +40,20 @@ public class Storage {
      * @throws DiHengException if an io exception occurs
      */
     public void saveTasks(List<Task> tasks) throws DiHengException {
+        assert tasks != null : "Tasks list should not be null";
         File file = new File(filepath);
         File parent = file.getParentFile();
         if (parent != null && !parent.exists()) {
-            parent.mkdirs();
+            boolean isSuccessful = parent.mkdirs();
+            if (!isSuccessful) {
+                throw new DiHengException("Error saving tasks", "Try again later");
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
+                assert task != null : "Task at index " + i + " should not be null";
                 writer.write((i + 1) + "." + task.toString());
                 writer.newLine();
             }
@@ -80,6 +85,7 @@ public class Storage {
                     continue;
                 }
                 Task task = parseTaskFromString(line);
+                assert task != null : "Parsed task should not be null";
                 loadedTasks.add(task);
             }
         } catch (IOException e) {
@@ -108,6 +114,7 @@ public class Storage {
             boolean isCompleted = line.substring(dotIndex + 4, dotIndex + 7).equals("[X]");
             if (taskPart.startsWith("[T]")) {
                 String desc = taskPart.substring(6).trim();
+                assert !desc.isEmpty() : "ToDo description should not be empty";
                 return new ToDo(desc, isCompleted);
             } else if (taskPart.startsWith("[E]")) {
                 int fromIndex = taskPart.indexOf("(from:");
