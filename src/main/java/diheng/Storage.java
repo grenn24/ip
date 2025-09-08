@@ -90,7 +90,6 @@ public class Storage {
         if (!Files.exists(path)) {
             return new ArrayList<>();
         }
-
         try {
             return Files.lines(path)
                     .map(String::trim)
