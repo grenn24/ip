@@ -12,7 +12,9 @@ import java.io.IOException;
  * A GUI for DiHeng chatbot using FXML.
  */
 public class Main extends Application {
-
+    /**
+     * The chatbot instance.
+     */
     private DiHeng chatbot = new DiHeng();
 
     @Override
