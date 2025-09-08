@@ -12,9 +12,14 @@ public class Parser {
      * The task list to be used by the parser.
      */
     private final TaskList tasklist;
+    /**
+     * The storage to be used by the parse.
+     */
+    private final Storage storage;
 
-    public Parser(TaskList tasklist) {
+    public Parser(TaskList tasklist, Storage storage) {
         this.tasklist = tasklist;
+        this.storage = storage;
     }
 
     public String parse(String input) throws DiHengException {
@@ -52,10 +57,12 @@ public class Parser {
                 return tasklist.find(commandArgs);
             case TODO, EVENT, DEADLINE:
                 return tasklist.add(command, commandArgs);
+            case LOAD:
+                return storage.setFilepath(commandArgs);
             default:
                 throw new DiHengException(
                         "Unknown command: " + parts[0],
-                        "The supported commands are: list, mark, unmark, todo, event, deadline, bye"
+                        "The supported commands are: list, mark, unmark, todo, event, deadline, load, bye"
                 );
         }
     }
