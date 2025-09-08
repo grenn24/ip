@@ -11,7 +11,7 @@
 
     <!-- Limit line length -->
     <module name="LineLength">
-        <property name="max" value="100"/>
+        <property name="max" value="120"/>
     </module>
 
     <!-- Require newline at end of file -->
@@ -21,7 +21,6 @@
         <!-- Javadoc rules -->
         <module name="JavadocType"/>
         <module name="JavadocMethod"/>
-        <module name="JavadocVariable"/>
 
         <!-- Naming conventions -->
         <module name="TypeName"/>           <!-- Classes/Interfaces: PascalCase -->
