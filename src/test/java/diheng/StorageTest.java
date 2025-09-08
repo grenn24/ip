@@ -45,7 +45,7 @@ public class StorageTest {
 
         storage.saveTasks(tasksToSave);
 
-        List<? extends Task> loadedTasks = storage.loadTasks();
+        List<Task> loadedTasks = storage.loadTasks();
 
         assertEquals(tasksToSave.size(), loadedTasks.size(), "Number of loaded tasks should match");
 
@@ -63,7 +63,7 @@ public class StorageTest {
             Files.delete(file.toPath());
         }
 
-        List<? extends Task> loadedTasks = storage.loadTasks();
+        List<Task> loadedTasks = storage.loadTasks();
         assertTrue(loadedTasks.isEmpty(),
                 "Loading from a non-existent file should return an empty list of tasks");
     }
