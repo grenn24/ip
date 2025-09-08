@@ -32,7 +32,9 @@ public class Parser {
     public String parse(String input) throws DiHengException {
         assert input != null && !input.isEmpty() : "Input should not be null or empty";
         String[] parts = input.split(" ", 2);
-        assert parts.length > 0 : "Split parts should not be empty";
+        if (parts.length == 0) {
+            throw new DiHengException("No command provided", "Please provide a valid command");
+        }
         Command command;
         try {
             command = Command.valueOf(parts[0].toUpperCase());
