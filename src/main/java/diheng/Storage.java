@@ -1,16 +1,16 @@
 package diheng;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 import diheng.exceptions.DiHengException;
@@ -65,13 +65,20 @@ public class Storage {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
-            int counter = 1;
-            for (Task task : tasks) {
-                assert task != null : "Task in list cannot be null";
-                writer.write(counter++ + "." + task.toString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
+            AtomicInteger counter = new AtomicInteger(1);
+            tasks.stream()
+                    .peek(task -> {
+                        assert task != null : "Task in list cannot be null";
+                    })
+                    .forEach(task -> {
+                        try {
+                            writer.write(counter.getAndIncrement() + "." + task.toString());
+                            writer.newLine();
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                    });
+        } catch (IOException | UncheckedIOException e) {
             throw new DiHengException("Error saving tasks",
                     "An error occurred while saving tasks to disk:\n" + e.getMessage());
         }
@@ -84,25 +91,18 @@ public class Storage {
             return new ArrayList<>();
         }
 
-        List<Task> loadedTasks = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
-
-                Optional<? extends Task> taskOpt = parseTaskFromString(line);
-                taskOpt.ifPresent(loadedTasks::add);
-            }
+        try {
+            return Files.lines(path)
+                    .map(String::trim)
+                    .filter(line -> !line.isEmpty())
+                    .map(this::parseTaskFromString)
+                    .flatMap(Optional::stream)
+                    .map(task -> (Task) task)
+                    .toList();
         } catch (IOException e) {
             throw new DiHengException("Error loading tasks",
                     "An error occurred while loading tasks from disk:\n" + e.getMessage());
         }
-
-        return loadedTasks;
     }
 
     private Optional<? extends Task> parseTaskFromString(String line) {
@@ -115,7 +115,7 @@ public class Storage {
 
             String taskPart = line.substring(dotIndex + 1).trim();
             boolean isCompleted = line.substring(dotIndex + 4, dotIndex + 7).equals("[X]");
-
+            Optional<Task> task;
             if (taskPart.startsWith(TODO_MARKER)) {
                 return parseToDo(taskPart, isCompleted);
             } else if (taskPart.startsWith(EVENT_MARKER)) {
