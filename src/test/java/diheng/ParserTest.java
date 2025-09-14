@@ -1,7 +1,5 @@
 package diheng;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import diheng.enums.Command;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import diheng.exceptions.DiHengException;
 import diheng.tasks.TaskList;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ParserTest {
 
