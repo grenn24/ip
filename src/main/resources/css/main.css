@@ -68,7 +68,7 @@
     -fx-padding: 8 12 8 12;
     -fx-max-width: 70%;
     -fx-wrap-text: true;
-    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 2, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 0, 1);
     -fx-text-fill: #ffffff;
 }
 
@@ -84,4 +84,9 @@
     -fx-background-color: #1c1c1c; /* dark gray bubble */
     -fx-text-fill: #ffffff; /* white text */
     -fx-alignment: center-left;
+}
+
+.scroll-pane, .scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-padding: 4; /* smaller padding to save space */
 }

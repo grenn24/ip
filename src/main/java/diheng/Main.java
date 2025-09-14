@@ -35,6 +35,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setTitle("DiHeng Chat");
             stage.show();
+            stage.setResizable(true);
 
         } catch (IOException e) {
             e.printStackTrace();
