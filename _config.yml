@@ -1,0 +1,6 @@
+# Use a supported GitHub Pages theme
+theme: jekyll-theme-minimal
+
+# Optional site metadata
+title: DiHeng Chatbot
+description: Your friendly AI task manager
