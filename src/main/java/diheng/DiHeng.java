@@ -80,4 +80,10 @@ public class DiHeng {
             return e.getMessage();
         }
     }
+
+    public String getGreeting() {
+        return "\uD83D\uDC4B Hey there! I'm Di Heng, your witty chatbot sidekick!\n"
+                + "I can help you manage tasks, give reminders, or just chat.\n"
+                + "Type 'help' if you need me to spell out what I can do!";
+    }
 }

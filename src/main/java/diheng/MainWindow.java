@@ -36,6 +36,9 @@ public class MainWindow extends AnchorPane {
      */
     public void setChatbot(DiHeng d) {
         chatbot = d;
+        dialogContainer.getChildren().add(
+                DialogBox.getDiHengDialog(chatbot.getGreeting(), dihengImage)
+        );
     }
 
     /**

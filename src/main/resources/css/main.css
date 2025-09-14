@@ -90,3 +90,7 @@
     -fx-background-color: transparent;
     -fx-padding: 4; /* smaller padding to save space */
 }
+
+.dialog-bubble, .dialog-bubble.user, .dialog-bubble.bot {
+    -fx-font-family: "Roboto Light";
+}

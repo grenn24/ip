@@ -54,6 +54,15 @@ public class Parser {
                 return tasklist.add(command, args);
             case LOAD:
                 return storage.setFilepath(args);
+            case HELP:
+                return "Hey there! \uD83D\uDE0E Here\u2019s what I can do for you:\n"
+                        + "- list: see all your tasks \uD83D\uDCCB\n"
+                        + "- mark/unmark: track your progress \u2705\u274C\n"
+                        + "- todo: add a to-do \uD83D\uDCDD\n"
+                        + "- event: schedule an event \uD83D\uDDD3\uFE0F\n"
+                        + "- deadline: set a deadline \u23F0\n"
+                        + "- load: switch files \uD83D\uDCBE\n"
+                        + "- bye: say goodbye \uD83D\uDC4B";
             default:
                 throw new DiHengException(
                         "Unknown command: " + parts[0],

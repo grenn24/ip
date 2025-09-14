@@ -88,7 +88,9 @@ public class Storage {
             }
 
             String taskPart = line.substring(dotIndex + 1).trim();
-            boolean isCompleted = line.substring(dotIndex + 4, dotIndex + 7).equals("[X]");
+
+            // get the completion marker dynamically
+            boolean isCompleted = taskPart.contains("[X]");
 
             if (taskPart.startsWith(TODO_MARKER)) {
                 return parseToDo(taskPart, isCompleted);
@@ -109,8 +111,11 @@ public class Storage {
     }
 
     private Optional<Task> parseToDo(String taskPart, boolean isCompleted) {
-        String desc = taskPart.substring(TODO_MARKER.length() + 1).trim();
-        assert !desc.isEmpty() : "ToDo description should not be empty";
+        // Remove the [T][ ] or [T][X] prefix
+        String desc = taskPart.substring(TODO_MARKER.length()).trim();
+        if (desc.startsWith("[ ]") || desc.startsWith("[X]")) {
+            desc = desc.substring(3).trim(); // remove the completion marker
+        }
         return Optional.of(new ToDo(desc, isCompleted));
     }
 
@@ -124,7 +129,11 @@ public class Storage {
             return Optional.empty();
         }
 
-        String desc = taskPart.substring(EVENT_MARKER.length() + 1, fromIndex).trim();
+        String desc = taskPart.substring(EVENT_MARKER.length()).trim();
+        if (desc.startsWith("[ ]") || desc.startsWith("[X]")) {
+            desc = desc.substring(3).trim();
+        }
+
         String start = taskPart.substring(fromIndex + 6, toIndex).trim();
         String end = taskPart.substring(toIndex + 3, endIndex).trim();
 
@@ -140,9 +149,12 @@ public class Storage {
             return Optional.empty();
         }
 
-        String desc = taskPart.substring(DEADLINE_MARKER.length() + 1, byIndex).trim();
-        String by = taskPart.substring(byIndex + 4, endIndex).trim();
+        String desc = taskPart.substring(DEADLINE_MARKER.length()).trim();
+        if (desc.startsWith("[ ]") || desc.startsWith("[X]")) {
+            desc = desc.substring(3).trim();
+        }
 
+        String by = taskPart.substring(byIndex + 4, endIndex).trim();
         return Optional.of(new Deadline(desc, by, isCompleted));
     }
 
