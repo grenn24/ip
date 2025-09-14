@@ -54,6 +54,11 @@ run {
 checkstyle {
     toolVersion = '10.26.1'
 }
-kotlin {
-    jvmToolchain(17)
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'diheng.Launcher'
+        )
+    }
 }
