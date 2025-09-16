@@ -22,7 +22,7 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
     private DiHeng chatbot;
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DiHeng.png"));
+    private Image dihengImage = new Image(this.getClass().getResourceAsStream("/images/DiHeng.png"));
 
     @FXML
     public void initialize() {
@@ -36,6 +36,9 @@ public class MainWindow extends AnchorPane {
      */
     public void setChatbot(DiHeng d) {
         chatbot = d;
+        dialogContainer.getChildren().add(
+                DialogBox.getDiHengDialog(chatbot.getGreeting(), dihengImage)
+        );
     }
 
     /**
@@ -48,7 +51,7 @@ public class MainWindow extends AnchorPane {
         String response = chatbot.getInputResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getDiHengDialog(response, dihengImage)
         );
         userInput.clear();
     }

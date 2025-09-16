@@ -15,5 +15,7 @@ public enum Command {
     BYE,
     CLEAR,
     FIND,
+    LOAD,
+    HELP,
     UNKNOWN();
 }

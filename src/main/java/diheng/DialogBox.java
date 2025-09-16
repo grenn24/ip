@@ -52,9 +52,12 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getDiHengDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        if (text.contains("OOPS!!!")) {
+            db.dialog.getStyleClass().add("error");
+        }
         return db;
     }
 }

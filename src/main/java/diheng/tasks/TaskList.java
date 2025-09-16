@@ -38,10 +38,10 @@ public class TaskList {
      */
     public String list() {
         if (tasks.isEmpty()) {
-            return "No tasks available.";
+            return "\uD83D\uDE0E Looks like you have no tasks! Time to chill.";
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("Here are the pending tasks:\n");
+        sb.append("\uD83D\uDCDD Here's what's cooking in your task list:\n");
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
             sb.append(String.format("%d.%s\n", i + 1, task));
@@ -62,7 +62,7 @@ public class TaskList {
         for (int index : indexes) {
             Task task = this.tasks.get(index); // may throw IndexOutOfBoundsException
             task.setCompleted(true);
-            sb.append("Nice! I've marked this task as done:\n");
+            sb.append("\u2705 Boom! Task completed:\n");
             sb.append(String.format(" %d.%s\n", index + 1, task));
         }
         return sb.toString().trim();
@@ -81,9 +81,10 @@ public class TaskList {
         for (int index : indexes) {
             Task task = this.tasks.get(index);  // may throw IndexOutOfBoundsException
             task.setCompleted(false);
-            sb.append("OK, I've marked this task as not done yet:\n");
+            sb.append("\uD83D\uDD34 Task is now marked as not done:\n");
             sb.append(String.format(" %d.%s\n", index + 1, task));
         }
+        sb.append("No worries, you got this! \uD83D\uDE0C");
         return sb.toString().trim();
     }
 
@@ -98,9 +99,9 @@ public class TaskList {
         this.tasks.remove(index);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Noted. I've removed this task:\n");
+        sb.append("\uD83D\uDDD1\uFE0F Oops! Removed this task:\\n");
         sb.append(String.format(" %d.%s\n", index + 1, task));
-        sb.append(String.format("Now you have %d tasks in the list", this.tasks.size()));
+        sb.append(String.format("You now have %d tasks left. Stay sharp! \uD83D\uDC40", this.tasks.size()));
         return sb.toString().trim();
     }
 
@@ -138,7 +139,7 @@ public class TaskList {
      */
     public String clear() {
         tasks.clear();
-        return "All tasks have been cleared.\n";
+        return "\uD83C\uDF89 All tasks cleared! Fresh start!\n";
     }
 
     /**
@@ -153,8 +154,8 @@ public class TaskList {
     public String add(Command type, String commandArgs) throws DiHengException {
         if (commandArgs.isEmpty()) {
             throw new DiHengException(
-                    "Missing task description",
-                    "Please provide the description of the task."
+                    "\u26A0\uFE0F Missing task description",
+                    "Please tell me what to add. I can't read minds! \uD83D\uDE05"
             );
         }
         Task currTask;
@@ -164,7 +165,7 @@ public class TaskList {
             case EVENT -> {
                 String[] parts = commandArgs.split("/from|/to");
                 if (parts.length < 3) {
-                    throw new DiHengException("Missing event start and end times",
+                    throw new DiHengException("\u26A0\uFE0F Missing event start and end times",
                             "Events must have /from and /to times.");
                 }
                 String desc = parts[0].trim();
@@ -176,7 +177,7 @@ public class TaskList {
             case DEADLINE -> {
                 String[] parts = commandArgs.split("/by");
                 if (parts.length < 2) {
-                    throw new DiHengException("Missing deadline time",
+                    throw new DiHengException("\u26A0\uFE0F Missing deadline time",
                             "Deadlines must have a /by time.");
                 }
                 String desc = parts[0].trim();
@@ -185,16 +186,16 @@ public class TaskList {
             }
 
             default -> throw new DiHengException(
-                    "Unknown command",
+                    "\u26A0\uFE0F Unknown command",
                     "The supported commands are: list, mark, unmark, todo, event, deadline, bye"
             );
         }
         tasks.add(currTask);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Got it. I've added this task:\n");
+        sb.append("\u2B50 Got it! Added this task:\n");
         sb.append(String.format(" %s\n", currTask));
-        sb.append(String.format(" Now you have %d tasks in the list.", tasks.size()));
+        sb.append(String.format(" You now have %d tasks. Let's keep going! \uD83D\uDE80", tasks.size()));
         return sb.toString().trim();
     }
 }

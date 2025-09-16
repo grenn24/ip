@@ -1,6 +1,5 @@
 package diheng;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -16,6 +15,9 @@ import diheng.tasks.Deadline;
 import diheng.tasks.Event;
 import diheng.tasks.Task;
 import diheng.tasks.ToDo;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StorageTest {
 
@@ -52,7 +54,8 @@ public class StorageTest {
         for (int i = 0; i < tasksToSave.size(); i++) {
             Task original = tasksToSave.get(i);
             Task loaded = loadedTasks.get(i);
-            assertEquals(original.toString(), loaded.toString(), "Task string representation should match");
+            assertEquals(original.toString(), loaded.toString(),
+                    "Task string representation should match");
         }
     }
 

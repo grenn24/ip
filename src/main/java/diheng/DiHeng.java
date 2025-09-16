@@ -15,7 +15,7 @@ public class DiHeng {
     /**
      * The task list to be used by the chatBot.
      */
-    private TaskList tasklist;
+    private TaskList tasklist = new TaskList();
     /**
      * The storage to be used by the chatBot.
      */
@@ -39,7 +39,7 @@ public class DiHeng {
         } catch (DiHengException e) {
             System.out.println(e.getMessage());
         }
-        this.parser = new Parser(this.tasklist);
+        this.parser = new Parser(this.tasklist, this.storage);
         this.ui = new UI();
     }
 
@@ -79,5 +79,11 @@ public class DiHeng {
         } catch (DiHengException | NumberFormatException | IndexOutOfBoundsException e) {
             return e.getMessage();
         }
+    }
+
+    public String getGreeting() {
+        return "\uD83D\uDC4B Hey there! I'm Di Heng, your witty chatbot sidekick!\n"
+                + "I can help you manage tasks, give reminders, or just chat.\n"
+                + "Type 'help' if you need me to spell out what I can do!";
     }
 }
