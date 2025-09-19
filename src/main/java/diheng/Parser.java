@@ -37,6 +37,7 @@ public class Parser {
 
         switch (command) {
             case BYE:
+                tasklist.save(storage);
                 return "Goodbye!";
             case LIST:
                 return tasklist.list();

@@ -4,6 +4,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import diheng.Storage;
 import diheng.enums.Command;
 import diheng.exceptions.DiHengException;
 import diheng.exceptions.InvalidDateException;
@@ -207,5 +208,9 @@ public class TaskList {
         sb.append(String.format(" %s\n", currTask));
         sb.append(String.format(" You now have %d tasks. Let's keep going! \uD83D\uDE80", tasks.size()));
         return sb.toString().trim();
+    }
+
+    public void save(Storage storage) throws DiHengException {
+        storage.saveTasks(tasks);
     }
 }

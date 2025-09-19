@@ -21,7 +21,7 @@ public class DiHengException extends Exception {
      */
     @Override
     public String getMessage() {
-        return String.format("OOPS!!! Di Heng has identified:\n%s\n\n\uD83D\uDD27 Here's a fix suggestion: %s",
+        return String.format("OOPS!!! Di Heng has identified a problem:\n%s\n\n\uD83D\uDD27 Here's a fix suggestion: %s",
                 super.getMessage(), recoverySuggestion);
     }
 }
