@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
     private final LocalDateTime deadline;
-    private final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     /**
      * Constructor for Deadline without completion status.
@@ -40,6 +40,6 @@ public class Deadline extends Task {
     public String toString() {
         return String.format("[D][%s] %s (by: %s)", super.isCompleted() ? "X" : " ",
                 super.getDescription(),
-                this.deadline.format(DATE_TIME_FORMAT));
+                deadline.format(DATE_TIME_FORMAT));
     }
 }

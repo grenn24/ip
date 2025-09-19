@@ -1,13 +1,17 @@
 package diheng.tasks;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * A class representing an event task.
  *
  * @see Task
  */
 public class Event extends Task {
-    private final String start;
-    private final String end;
+    private final LocalDate start;
+    private final LocalDate end;
+    public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     /**
      * Constructor for Event task.
@@ -18,8 +22,10 @@ public class Event extends Task {
      */
     public Event(String description, String start, String end) {
         super(description);
-        this.start = start;
-        this.end = end;
+
+        this.start = LocalDate.parse(start, DATE_TIME_FORMAT );
+        this.end = LocalDate.parse(end, DATE_TIME_FORMAT
+        );
     }
 
     /**
@@ -32,12 +38,13 @@ public class Event extends Task {
      */
     public Event(String description, String start, String end, boolean isCompleted) {
         super(description, isCompleted);
-        this.start = start;
-        this.end = end;
+        this.start = LocalDate.parse(start, DATE_TIME_FORMAT);
+        this.end = LocalDate.parse(end, DATE_TIME_FORMAT);
     }
 
     @Override
     public String toString() {
-        return String.format("[E][%s] %s (from: %s to: %s)", super.isCompleted() ? "X" : " ", super.getDescription(), start, end);
+        return String.format("[E][%s] %s (from: %s to: %s)", super.isCompleted() ? "X" : " ",
+                super.getDescription(), start.format(DATE_TIME_FORMAT), end.format(DATE_TIME_FORMAT));
     }
 }

@@ -54,5 +54,15 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDiHengDialog(response, dihengImage)
         );
         userInput.clear();
+
+        if (input.trim().equalsIgnoreCase("bye")) {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException ignored) {
+                }
+                javafx.application.Platform.exit();
+            }).start();
+        }
     }
 }

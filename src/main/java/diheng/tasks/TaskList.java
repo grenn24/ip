@@ -1,10 +1,12 @@
 package diheng.tasks;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import diheng.enums.Command;
 import diheng.exceptions.DiHengException;
+import diheng.exceptions.InvalidDateException;
 
 /**
  * Manages a list of tasks, providing functionalities to add, list, mark, unmark,
@@ -154,7 +156,7 @@ public class TaskList {
     public String add(Command type, String commandArgs) throws DiHengException {
         if (commandArgs.isEmpty()) {
             throw new DiHengException(
-                    "\u26A0\uFE0F Missing task description",
+                    "\u26A0 Missing task description",
                     "Please tell me what to add. I can't read minds! \uD83D\uDE05"
             );
         }
@@ -165,28 +167,36 @@ public class TaskList {
             case EVENT -> {
                 String[] parts = commandArgs.split("/from|/to");
                 if (parts.length < 3) {
-                    throw new DiHengException("\u26A0\uFE0F Missing event start and end times",
-                            "Events must have /from and /to times.");
+                    throw new DiHengException("\u26A0 Missing event start and end times",
+                            "Specify start and end times using parameters /from and /to.");
                 }
                 String desc = parts[0].trim();
                 String start = parts[1].trim();
                 String end = parts[2].trim();
-                currTask = new Event(desc, start, end);
+                try {
+                    currTask = new Event(desc, start, end);
+                } catch (DateTimeParseException e) {
+                    throw new InvalidDateException(Event.DATE_TIME_FORMAT);
+                }
             }
 
             case DEADLINE -> {
                 String[] parts = commandArgs.split("/by");
                 if (parts.length < 2) {
-                    throw new DiHengException("\u26A0\uFE0F Missing deadline time",
-                            "Deadlines must have a /by time.");
+                    throw new DiHengException("\u26A0 Missing deadline time",
+                            "Specify deadline using parameter /by.");
                 }
                 String desc = parts[0].trim();
                 String by = parts[1].trim();
-                currTask = new Deadline(desc, by);
+                try {
+                    currTask = new Deadline(desc, by);
+                } catch (DateTimeParseException e) {
+                    throw new InvalidDateException(Deadline.DATE_TIME_FORMAT);
+                }
             }
 
             default -> throw new DiHengException(
-                    "\u26A0\uFE0F Unknown command",
+                    "\u26A0 Unknown command",
                     "The supported commands are: list, mark, unmark, todo, event, deadline, bye"
             );
         }
