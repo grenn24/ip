@@ -13,7 +13,9 @@ enjoyable!
 - **Add Tasks**
     - `todo <description>` – Add a simple to-do item.
     - `deadline <description> /by <dd/MM/yyyy HH:mm>` – Add a task with a deadline.
-    - `event <description> /from <start> /to <end>` – Add an event with start and end times.
+        - Example: deadline finish project /by 01/12/2025 12:00
+    - `event <description> /from <dd/MM/yyyy> /to <dd/MM/yyyy>` – Add an event with start and end times.
+        - Example: event burger party /from 01/12/2025 /to 01/12/2025
 
 - **View Tasks**
     - `list` – See all your tasks with current status and deadlines.
@@ -25,9 +27,6 @@ enjoyable!
 - **Remove Tasks**
     - `delete <task index>` – Remove a task 🗑️.
     - `clear` – Remove all tasks and start fresh 🎉.
-
-- **Find Tasks**
-    - `find <keyword>` – Search for tasks by keyword 🔍.
 
 - **Load/Change Filepath**
     - `load <filepath>` – Change the location of your task storage file.
