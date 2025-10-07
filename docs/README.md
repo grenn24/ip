@@ -41,14 +41,15 @@ enjoyable!
 
 ## 🚀 Quick Start
 
-1. **Launch the GUI**
-    - Open `MainWindow.java` or your compiled JAR file.
-    - You’ll see a chat interface with a text input and send button.
+1. **Java 17**
+    - Ensure you have Java 17 or above installed on your computer.
 
-2. **Set Up DiHeng**
-    - If not automatically set, link the chatbot using:
+2. **JAR**
+    - Download the latest release in [GitHub](https://github.com/grenn24/ip/releases/tag/A-UserGuide)
+    - Go to the folder where the downloaded jar file is located
+    - Run the jar file using the following command:
       ```java
-      mainWindow.setChatbot(new DiHeng());
+      java -jar DiHeng.jar
       ```
 
 3. **Start Adding Tasks**
