@@ -42,7 +42,8 @@ enjoyable!
 ## 🚀 Quick Start
 
 1. **Java 17**
-    - Ensure you have Java 17 or above installed on your computer.
+    - Ensure you have Java 17 or above installed on your computer
+    - If not, download it [here](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 2. **JAR**
     - Download the latest release in [GitHub](https://github.com/grenn24/ip/releases/tag/A-UserGuide)
