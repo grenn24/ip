@@ -44,7 +44,7 @@ public class DiHeng {
     }
 
     /**
-     * Run the chatBot, reading user input and executing commands in a loop until the user exits.
+     * Runs the chatBot, reading user input and executing commands in a loop until the user exits.
      */
     public void run() {
         ui.showGreeting();
